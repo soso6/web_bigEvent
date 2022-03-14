@@ -1,6 +1,7 @@
 $(function() {
     var layer = layui.layer;
     var form = layui.form
+    var info = JSON.parse(localStorage.getItem('editArticleId'))
 
 
     initCLassInfo()
@@ -8,13 +9,9 @@ $(function() {
 
     function initContent() {
 
-        var info = JSON.parse(localStorage.getItem('editArticleId'))
         form.val('mainForm', info)
-        var newImgURL = URL.createObjectURL(info.cover_img)
-        $image
-            .cropper('destroy') // 销毁旧的裁剪区域
-            .attr('src', newImgURL) // 重新设置图片路径
-            .cropper(options) // 重新初始化裁剪区域
+        console.log('dsadasdas' + info.cover_img)
+        $('#image').attr('src', info.cover_img)
     }
 
     function initCLassInfo() {
@@ -27,6 +24,7 @@ $(function() {
                 if (res.status == 0) {
                     var htmlStr = template('temp-class', res)
                     $("[name=cate_id]").html(htmlStr)
+                    $("[name=cate_id]").val(info.cate_id)
                     form.render()
                     return
                 }
